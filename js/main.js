@@ -1,4 +1,5 @@
 tableId = "game";
+swag = "swag";
 
 bomb = "*";
 clear = " ";
