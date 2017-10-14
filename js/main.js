@@ -114,7 +114,7 @@ var Game = function(nX, nY){
 
         //if(element == this.element.space)
 
-        if(element == this.elements.bomb) elementToAdd += '#ff0000';
+        if(element == this.elements.bomb) elementToAdd = 'background: #ff0000';
         else if(element == this.elements.space) elementToAdd = 'background: black';
         else if(element != NaN){
           switch (element) {
@@ -197,6 +197,7 @@ Game.prototype.blankArea = function (i, j) {
 function clickButton(i, j){
   var value = prato.getPlayGround()[i][j];
   if(value == prato.elements.bomb){
+    clearInterval(secondsGame);
     prato.setEndGame();
     prato.updateTable();
   }
@@ -208,16 +209,33 @@ function clickButton(i, j){
 
 }
 
+function createGame(x, y){
+  prato = new Game(x, y);
+  prato.ini();
+  prato.createTable();
+}
 
+
+function selectDifficulty(x){
+  document.getElementById("secondi").innerHTML = 0;
+  if (x == 0) createGame(9, 9);
+  else if( x == 1) createGame(13, 13);
+  else if(x == 2) createGame(21, 13);
+  else createGame(30, 15);
+
+  now = Date.now();
+
+  secondsGame = setInterval(timer, 1000);
+
+}
+
+function timer(){
+  var x = document.getElementById("secondi");
+  x.innerHTML = parseInt((Date.now() - now) / 1000);
+}
 
 
 function main(){
-  prato = new Game(9, 9);
-  prato.ini();
-  prato.createTable();
-
-
-
 }
 
 window.onload = main();

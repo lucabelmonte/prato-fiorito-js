@@ -1,7 +1,7 @@
 <html>
   <head>
     <style>
-      input[type="button"]{
+      table input[type="button"]{
         padding: 0;
         margin: 0;
         height: 30px;
@@ -20,6 +20,11 @@
   </head>
   <body>
     <p id="titolo">Prato fiorito JS</p>
+    <p id="ss">Tempo trascorso: <span id="secondi">0</span>s</p>
+    <input type="button" value="Principiante" onclick="selectDifficulty(0)">
+    <input type="button" value="Medio" onclick="selectDifficulty(1)">
+    <input type="button" value="Esperto" onclick="selectDifficulty(2)">
+    <input type="button" value="Supremo" onclick="selectDifficulty(3)">
     <table id="game"></table>
     <script src="js/main.js"></script>
   </body>
