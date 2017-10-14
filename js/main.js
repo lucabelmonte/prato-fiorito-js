@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+
+swag = "swag";
+
+>>>>>>> 13533a18c86a8d8879d57b06f9243fa379d686da
 var Game = function(nX, nY){
   /*
   * Inizializzazione delle proprietà
@@ -34,10 +40,17 @@ var Game = function(nX, nY){
 
   this.endGame = false;
   //this.numberN = n;
+<<<<<<< HEAD
 
   this.tableId = "game";
 
 
+=======
+
+  this.tableId = "game";
+
+
+>>>>>>> 13533a18c86a8d8879d57b06f9243fa379d686da
   this.getX = function(){return this.dim.x;}
   this.getY = function(){return this.dim.y;}
 
@@ -97,6 +110,7 @@ var Game = function(nX, nY){
        var actualContent = this.tableButtonPLay;
       for(var j = 0; j < this.getX(); j++){
         tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", this.elements.clear).replace("{y_y_y}",  i + "," + j ).replace("{z_z_z}", '') + this.HTMLelement.colEnd;
+<<<<<<< HEAD
       }
       tableString += this.HTMLelement.rowEnd;
     }
@@ -135,12 +149,55 @@ var Game = function(nX, nY){
 
 
         tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", element).replace("{y_y_y}",  i + "," + j ).replace("{z_z_z}", elementToAdd) + this.HTMLelement.colEnd;
+=======
+>>>>>>> 13533a18c86a8d8879d57b06f9243fa379d686da
       }
       tableString += this.HTMLelement.rowEnd;
     }
     document.getElementById(this.tableId).innerHTML = tableString;
   };
 
+<<<<<<< HEAD
+=======
+  this.updateTable = function(){
+    var tableString = "";
+    for(var i = 0; i < this.getY(); i++){
+      tableString += this.HTMLelement.row;
+       var actualContent = this.tableButtonPLay;
+      for(var j = 0; j < this.getX(); j++){
+        var element = this.playGroundVisual[i][j];
+        var elementToAdd = 'color:';
+
+        //if(element == this.element.space)
+
+        if(element == this.elements.bomb) elementToAdd += '#ff0000';
+        else if(element == this.elements.space) elementToAdd = 'background: black';
+        else if(element != NaN){
+          switch (element) {
+            case 1:
+              elementToAdd += '#3a73a9';
+              break;
+            case 2:
+              elementToAdd += '#9966ff';
+              break;
+            case 3:
+              elementToAdd += '#ff6699';
+              break;
+            default:
+              elementToAdd += '#ff0000';
+          }
+        }
+        else elementToAdd += '#ffffff';
+
+
+        tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", element).replace("{y_y_y}",  i + "," + j ).replace("{z_z_z}", elementToAdd) + this.HTMLelement.colEnd;
+      }
+      tableString += this.HTMLelement.rowEnd;
+    }
+    document.getElementById(this.tableId).innerHTML = tableString;
+  };
+
+>>>>>>> 13533a18c86a8d8879d57b06f9243fa379d686da
 };
 
 
@@ -197,7 +254,10 @@ Game.prototype.blankArea = function (i, j) {
 function clickButton(i, j){
   var value = prato.getPlayGround()[i][j];
   if(value == prato.elements.bomb){
+<<<<<<< HEAD
     clearInterval(secondsGame);
+=======
+>>>>>>> 13533a18c86a8d8879d57b06f9243fa379d686da
     prato.setEndGame();
     prato.updateTable();
   }
@@ -223,7 +283,16 @@ function selectDifficulty(x){
   else if(x == 2) createGame(21, 13);
   else createGame(30, 15);
 
+<<<<<<< HEAD
   now = Date.now();
+=======
+function main(){
+  document.getElementById("prova").innerHTML = "swag";
+  prato = new Game(9, 9);
+  prato.ini();
+  prato.createTable();
+
+>>>>>>> 13533a18c86a8d8879d57b06f9243fa379d686da
 
   secondsGame = setInterval(timer, 1000);
 
