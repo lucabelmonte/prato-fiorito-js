@@ -32,7 +32,6 @@ var Game = function(nX, nY){
     y: nY
   };
 
-
   this.endGame = false;
   //this.numberN = n;
 
@@ -50,7 +49,8 @@ var Game = function(nX, nY){
     this.endGame = true;
     for(var i = 0; i < this.getY(); i++){
       for(var j = 0; j < this.getX(); j++){
-        this.playGroundVisual[i][j] = this.playGround[i][j] != this.elements.clear ? this.playGround[i][j] : this.elements.space ;
+        if(this.playGround[i][j] == this.elements.clear) this.playGround[i][j] = this.elements.space;
+        this.playGroundVisual[i][j] = this.playGround[i][j];
       }
     }
   }
@@ -59,26 +59,17 @@ var Game = function(nX, nY){
   */
 
   this.ini = function(){
-    // creazione delle matrici
     this.playGround = new Array(this.getY());
     this.playGroundVisual = new Array(this.getY());
     for(var i = 0; i < this.getY(); i++) this.playGround[i] = new Array(this.getX());
     for(var i = 0; i < this.getY(); i++) this.playGroundVisual[i] = new Array(this.getX());
-    //this.playGroundVisual = this.playGround.slice();
 
-
-    // inizializzazione delle matrici
     for(var i = 0; i < this.getY(); i++) for(var j = 0; j < this.getX(); j++) this.playGround[i][j] = (Math.random() < (1 - this.bombPerc)) ? this.elements.number : this.elements.bomb;
     for(var i = 0; i < this.getY(); i++) for(var j = 0; j < this.getX(); j++) this.playGroundVisual[i][j] = this.elements.clear;
 
+    for(var i = 0; i < this.getY(); i++)
+      for(var j = 0; j < this.getX(); j++) this.playGround[i][j] = this.playGround[i][j] == this.elements.bomb ? this.elements.bomb : this.numBombsAround(j, i);
 
-
-
-    for(var i = 0; i < this.getY(); i++){
-      for(var j = 0; j < this.getX(); j++){
-        this.playGround[i][j] = this.playGround[i][j] == this.elements.bomb ? this.elements.bomb : this.numBombsAround(j, i);
-      }
-    }
   }
 
 
@@ -89,7 +80,7 @@ var Game = function(nX, nY){
 
   this.setPlayGroundVisual = function(val, i, j){
     this.playGroundVisual[i][j] = val;
-  }
+  };
 
   this.createTable = function(){
     var tableString = "";
@@ -147,12 +138,12 @@ var Game = function(nX, nY){
       for(var j = 0; j < this.getX(); j++){
         var ele = this.playGround[i][j], eleVisual = this.playGroundVisual[i][j];
         if(ele == this.elements.bomb && eleVisual != this.elements.maybe) return false;
-        if(ele != eleVisual) return false;
+        if(ele != this.elements.bomb && ele != eleVisual) return false;
       }
-
     }
+    this.endGame = true;
     return true;
-  }
+  };
 
 };
 
@@ -211,6 +202,7 @@ function clickButton(i, j){
   if(prato.playGroundVisual[i][j] == prato.elements.maybe) return;
   var value = prato.getPlayGround()[i][j];
   if(value == prato.elements.bomb){
+    document.getElementById("secondi").innerHTML = "Hai perso!";
     clearInterval(secondsGame);
     prato.setEndGame();
     prato.updateTable();
@@ -220,14 +212,24 @@ function clickButton(i, j){
     prato.setPlayGroundVisual(value, i, j);
     prato.updateTable();
   }
-  if(this.checkWins()) console.log("Hai vinto!");
+  gameWins();
 }
 
 function rightClick(i, j){
   if(prato.playGroundVisual[i][j] == prato.elements.clear || prato.playGroundVisual[i][j] == prato.elements.maybe)
     prato.playGroundVisual[i][j] = prato.playGroundVisual[i][j] == prato.elements.maybe ? prato.elements.clear : prato.elements.maybe;
   prato.updateTable();
-  if(this.checkWins()) console.log("Hai vinto!");
+  gameWins();
+}
+
+function gameWins(){
+  if(prato.checkWins()){
+    clearInterval(secondsGame);
+    var ele = document.getElementById("secondi");
+    var sec = parseInt((Date.now() - now) / 1000);
+    ele.innerHTML = "Hai vinto in " + sec + "s";
+    console.log( "Hai vinto in " + sec + "s");
+  }
 }
 
 function createGame(x, y){
@@ -235,7 +237,6 @@ function createGame(x, y){
   prato.ini();
   prato.createTable();
 }
-
 
 function selectDifficulty(x){
   document.getElementById("secondi").innerHTML = 0;
@@ -253,7 +254,6 @@ function timer(){
   var x = document.getElementById("secondi");
   x.innerHTML = parseInt((Date.now() - now) / 1000);
 }
-
 
 function main(){
   document.addEventListener('contextmenu', event => event.preventDefault());
