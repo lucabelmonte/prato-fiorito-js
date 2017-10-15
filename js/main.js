@@ -142,6 +142,18 @@ var Game = function(nX, nY){
     document.getElementById(this.tableId).innerHTML = tableString;
   };
 
+  this.checkWins = function(){
+    for(var i = 0; i < this.getY(); i++){
+      for(var j = 0; j < this.getX(); j++){
+        var ele = this.playGround[i][j], eleVisual = this.playGroundVisual[i][j];
+        if(ele == this.elements.bomb && eleVisual != this.elements.maybe) return false;
+        if(ele != eleVisual) return false;
+      }
+
+    }
+    return true;
+  }
+
 };
 
 
@@ -208,12 +220,14 @@ function clickButton(i, j){
     prato.setPlayGroundVisual(value, i, j);
     prato.updateTable();
   }
+  if(this.checkWins()) console.log("Hai vinto!");
 }
 
 function rightClick(i, j){
   if(prato.playGroundVisual[i][j] == prato.elements.clear || prato.playGroundVisual[i][j] == prato.elements.maybe)
     prato.playGroundVisual[i][j] = prato.playGroundVisual[i][j] == prato.elements.maybe ? prato.elements.clear : prato.elements.maybe;
   prato.updateTable();
+  if(this.checkWins()) console.log("Hai vinto!");
 }
 
 function createGame(x, y){
