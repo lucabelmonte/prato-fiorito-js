@@ -7,7 +7,7 @@ var Game = function(nX, nY){
   this.constN = 9;
   this.bombPerc = .15;
 
-  this.tableButtonPLay = '<input type="button" value="{x_x_x}" style="{z_z_z}" onclick="clickButton({y_y_y})">';
+  this.tableButtonPLay = '<input type="button" value="{x_x_x}" style="{z_z_z}" onclick="clickButton({y_y_y})" oncontextmenu="rightClick({y_y_y})">';
   this.HTMLelement = {
     row: "<tr>",
     rowEnd: "</tr>",
@@ -23,7 +23,8 @@ var Game = function(nX, nY){
     bomb: 'B',
     clear: ' ',
     space: '#',
-    number: '.'
+    number: '.',
+    maybe: '?'
   };
 
   this.dim = {
@@ -96,7 +97,7 @@ var Game = function(nX, nY){
       tableString += this.HTMLelement.row;
        var actualContent = this.tableButtonPLay;
       for(var j = 0; j < this.getX(); j++){
-        tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", this.elements.clear).replace("{y_y_y}",  i + "," + j ).replace("{z_z_z}", '') + this.HTMLelement.colEnd;
+        tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", this.elements.clear).replace(/{y_y_y}/g,  i + "," + j ).replace("{z_z_z}", '') + this.HTMLelement.colEnd;
       }
       tableString += this.HTMLelement.rowEnd;
     }
@@ -134,7 +135,7 @@ var Game = function(nX, nY){
         else elementToAdd += '#ffffff';
 
 
-        tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", element).replace("{y_y_y}",  i + "," + j ).replace("{z_z_z}", elementToAdd) + this.HTMLelement.colEnd;
+        tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", element).replace(/{y_y_y}/g,  i + "," + j ).replace("{z_z_z}", elementToAdd) + this.HTMLelement.colEnd;
       }
       tableString += this.HTMLelement.rowEnd;
     }
@@ -195,6 +196,7 @@ Game.prototype.blankArea = function (i, j) {
 };
 
 function clickButton(i, j){
+  if(prato.playGroundVisual[i][j] == prato.elements.maybe) return;
   var value = prato.getPlayGround()[i][j];
   if(value == prato.elements.bomb){
     clearInterval(secondsGame);
@@ -206,7 +208,12 @@ function clickButton(i, j){
     prato.setPlayGroundVisual(value, i, j);
     prato.updateTable();
   }
+}
 
+function rightClick(i, j){
+  if(prato.playGroundVisual[i][j] == prato.elements.clear || prato.playGroundVisual[i][j] == prato.elements.maybe)
+    prato.playGroundVisual[i][j] = prato.playGroundVisual[i][j] == prato.elements.maybe ? prato.elements.clear : prato.elements.maybe;
+  prato.updateTable();
 }
 
 function createGame(x, y){
@@ -226,7 +233,6 @@ function selectDifficulty(x){
   now = Date.now();
 
   secondsGame = setInterval(timer, 1000);
-
 }
 
 function timer(){
@@ -236,6 +242,7 @@ function timer(){
 
 
 function main(){
+  document.addEventListener('contextmenu', event => event.preventDefault());
 }
 
 window.onload = main();
