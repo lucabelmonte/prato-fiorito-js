@@ -107,7 +107,7 @@ var Game = function(nX, nY){
         //if(element == this.element.space)
 
         if(element == this.elements.bomb) elementToAdd = 'background: #ff0000';
-        else if(element == this.elements.space) elementToAdd = 'background: black';
+        else if(element == this.elements.space) elementToAdd = 'background: #dddddd; color: #dddddd';
         else if(element != NaN){
           switch (element) {
             case 1:
