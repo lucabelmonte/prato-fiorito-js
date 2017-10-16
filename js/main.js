@@ -7,7 +7,11 @@ var Game = function(nX, nY){
   this.constN = 9;
   this.bombPerc = .15;
 
+<<<<<<< Updated upstream
   this.tableButtonPLay = '<input type="button" value="{x_x_x}" style="{z_z_z}" onclick="clickButton({y_y_y})" oncontextmenu="rightClick({y_y_y})">';
+=======
+  this.tableButtonPLay = '<input type="button" value="{x_x_x}" style="{z_z_z}" onclick="clickButton({y_y_y})">';
+>>>>>>> Stashed changes
   this.HTMLelement = {
     row: "<tr>",
     rowEnd: "</tr>",
@@ -23,8 +27,12 @@ var Game = function(nX, nY){
     bomb: 'B',
     clear: ' ',
     space: '#',
+<<<<<<< Updated upstream
     number: '.',
     maybe: 'x'
+=======
+    number: '.'
+>>>>>>> Stashed changes
   };
 
   this.dim = {
@@ -32,6 +40,10 @@ var Game = function(nX, nY){
     y: nY
   };
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   this.endGame = false;
   //this.numberN = n;
 
@@ -49,8 +61,12 @@ var Game = function(nX, nY){
     this.endGame = true;
     for(var i = 0; i < this.getY(); i++){
       for(var j = 0; j < this.getX(); j++){
+<<<<<<< Updated upstream
         if(this.playGround[i][j] == this.elements.clear) this.playGround[i][j] = this.elements.space;
         this.playGroundVisual[i][j] = this.playGround[i][j];
+=======
+        this.playGroundVisual[i][j] = this.playGround[i][j] != this.elements.clear ? this.playGround[i][j] : this.elements.space ;
+>>>>>>> Stashed changes
       }
     }
   }
@@ -59,10 +75,15 @@ var Game = function(nX, nY){
   */
 
   this.ini = function(){
+<<<<<<< Updated upstream
+=======
+    // creazione delle matrici
+>>>>>>> Stashed changes
     this.playGround = new Array(this.getY());
     this.playGroundVisual = new Array(this.getY());
     for(var i = 0; i < this.getY(); i++) this.playGround[i] = new Array(this.getX());
     for(var i = 0; i < this.getY(); i++) this.playGroundVisual[i] = new Array(this.getX());
+<<<<<<< Updated upstream
 
     for(var i = 0; i < this.getY(); i++) for(var j = 0; j < this.getX(); j++) this.playGround[i][j] = (Math.random() < (1 - this.bombPerc)) ? this.elements.number : this.elements.bomb;
     for(var i = 0; i < this.getY(); i++) for(var j = 0; j < this.getX(); j++) this.playGroundVisual[i][j] = this.elements.clear;
@@ -70,6 +91,23 @@ var Game = function(nX, nY){
     for(var i = 0; i < this.getY(); i++)
       for(var j = 0; j < this.getX(); j++) this.playGround[i][j] = this.playGround[i][j] == this.elements.bomb ? this.elements.bomb : this.numBombsAround(j, i);
 
+=======
+    //this.playGroundVisual = this.playGround.slice();
+
+
+    // inizializzazione delle matrici
+    for(var i = 0; i < this.getY(); i++) for(var j = 0; j < this.getX(); j++) this.playGround[i][j] = (Math.random() < (1 - this.bombPerc)) ? this.elements.number : this.elements.bomb;
+    for(var i = 0; i < this.getY(); i++) for(var j = 0; j < this.getX(); j++) this.playGroundVisual[i][j] = this.elements.clear;
+
+
+
+
+    for(var i = 0; i < this.getY(); i++){
+      for(var j = 0; j < this.getX(); j++){
+        this.playGround[i][j] = this.playGround[i][j] == this.elements.bomb ? this.elements.bomb : this.numBombsAround(j, i);
+      }
+    }
+>>>>>>> Stashed changes
   }
 
 
@@ -80,7 +118,11 @@ var Game = function(nX, nY){
 
   this.setPlayGroundVisual = function(val, i, j){
     this.playGroundVisual[i][j] = val;
+<<<<<<< Updated upstream
   };
+=======
+  }
+>>>>>>> Stashed changes
 
   this.createTable = function(){
     var tableString = "";
@@ -88,7 +130,11 @@ var Game = function(nX, nY){
       tableString += this.HTMLelement.row;
        var actualContent = this.tableButtonPLay;
       for(var j = 0; j < this.getX(); j++){
+<<<<<<< Updated upstream
         tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", this.elements.clear).replace(/{y_y_y}/g,  i + "," + j ).replace("{z_z_z}", '') + this.HTMLelement.colEnd;
+=======
+        tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", this.elements.clear).replace("{y_y_y}",  i + "," + j ).replace("{z_z_z}", '') + this.HTMLelement.colEnd;
+>>>>>>> Stashed changes
       }
       tableString += this.HTMLelement.rowEnd;
     }
@@ -107,11 +153,18 @@ var Game = function(nX, nY){
         //if(element == this.element.space)
 
         if(element == this.elements.bomb) elementToAdd = 'background: #ff0000';
+<<<<<<< Updated upstream
         else if(element == this.elements.space) elementToAdd = 'background: #dddddd; color: #dddddd';
         else if(element != NaN){
           switch (element) {
             case 1:
             
+=======
+        else if(element == this.elements.space) elementToAdd = 'background: black';
+        else if(element != NaN){
+          switch (element) {
+            case 1:
+>>>>>>> Stashed changes
               elementToAdd += '#3a73a9';
               break;
             case 2:
@@ -127,13 +180,18 @@ var Game = function(nX, nY){
         else elementToAdd += '#ffffff';
 
 
+<<<<<<< Updated upstream
         tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", element).replace(/{y_y_y}/g,  i + "," + j ).replace("{z_z_z}", elementToAdd) + this.HTMLelement.colEnd;
+=======
+        tableString += this.HTMLelement.col + actualContent.replace("{x_x_x}", element).replace("{y_y_y}",  i + "," + j ).replace("{z_z_z}", elementToAdd) + this.HTMLelement.colEnd;
+>>>>>>> Stashed changes
       }
       tableString += this.HTMLelement.rowEnd;
     }
     document.getElementById(this.tableId).innerHTML = tableString;
   };
 
+<<<<<<< Updated upstream
   this.checkWins = function(){
     for(var i = 0; i < this.getY(); i++){
       for(var j = 0; j < this.getX(); j++){
@@ -146,6 +204,8 @@ var Game = function(nX, nY){
     return true;
   };
 
+=======
+>>>>>>> Stashed changes
 };
 
 
@@ -200,10 +260,15 @@ Game.prototype.blankArea = function (i, j) {
 };
 
 function clickButton(i, j){
+<<<<<<< Updated upstream
   if(prato.playGroundVisual[i][j] == prato.elements.maybe) return;
   var value = prato.getPlayGround()[i][j];
   if(value == prato.elements.bomb){
     document.getElementById("secondi").innerHTML = "Hai perso!";
+=======
+  var value = prato.getPlayGround()[i][j];
+  if(value == prato.elements.bomb){
+>>>>>>> Stashed changes
     clearInterval(secondsGame);
     prato.setEndGame();
     prato.updateTable();
@@ -213,6 +278,7 @@ function clickButton(i, j){
     prato.setPlayGroundVisual(value, i, j);
     prato.updateTable();
   }
+<<<<<<< Updated upstream
   gameWins();
 }
 
@@ -231,6 +297,9 @@ function gameWins(){
     ele.innerHTML = "Hai vinto in " + sec + "s";
     console.log( "Hai vinto in " + sec + "s");
   }
+=======
+
+>>>>>>> Stashed changes
 }
 
 function createGame(x, y){
@@ -239,6 +308,10 @@ function createGame(x, y){
   prato.createTable();
 }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 function selectDifficulty(x){
   document.getElementById("secondi").innerHTML = 0;
   if (x == 0) createGame(9, 9);
@@ -249,6 +322,10 @@ function selectDifficulty(x){
   now = Date.now();
 
   secondsGame = setInterval(timer, 1000);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 }
 
 function timer(){
@@ -256,8 +333,13 @@ function timer(){
   x.innerHTML = parseInt((Date.now() - now) / 1000);
 }
 
+<<<<<<< Updated upstream
 function main(){
   document.addEventListener('contextmenu', event => event.preventDefault());
+=======
+
+function main(){
+>>>>>>> Stashed changes
 }
 
 window.onload = main();
